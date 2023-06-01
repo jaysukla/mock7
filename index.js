@@ -14,10 +14,10 @@ app.get('/',(req,res)=>{
 
 
 // Route for user registration
-app.post('/api/register', (req, res) => {
+app.post('/api/register', async (req, res) => {
 let {name,email,password,address}=req.body;
-  bcrypt.hash(password, 5, function(err, hash) {
- User.insertMany([{name,email,'password':hash,address}])
+  bcrypt.hash(password, 5, async function(err, hash) {
+ let D = await User.insertMany([{name,email,'password':hash,address}])
 
 });
 
@@ -41,6 +41,8 @@ if(result==true){
 });
 
  
+
+
 });
 
 // Route for resetting user password
@@ -100,7 +102,7 @@ app.get('/api/restaurants/:id',async (req, res) => {
 
 let restorent = await Restaurant.findById(restaurantId)
 
-  res.status(200).json(restaurant);
+  res.status(200).json(restorent);
 });
 
 // Route for retrieving the menu of a specific restaurant
